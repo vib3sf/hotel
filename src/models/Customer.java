@@ -3,11 +3,16 @@ package models;
 import models.payment.IPayment;
 
 public class Customer {
-    private String firstName;
-    private String lastName;
-    private IPayment payment;
+    private final String firstName;
+    private final String lastName;
+    private final IPayment payment;
     private double expense;
-
+    Customer(String firstName, String lastName, IPayment payment, double expense){
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.payment = payment;
+        this.expense = expense;
+    }
     public String getFirstName() {
         return firstName;
     }
