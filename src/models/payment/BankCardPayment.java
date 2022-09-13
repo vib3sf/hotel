@@ -8,7 +8,7 @@ public class BankCardPayment implements IPayment {
     @Override
     public void pay(double pay, Customer customer) {
         if (card.getAmount() > pay) {
-            customer.setExpense(customer.getExpense() - pay);
+            customer.setDebt(customer.getDebt() - pay);
             card.setAmount(card.getAmount() - pay);
             System.out.println("Successful payment.");
         }
@@ -17,6 +17,10 @@ public class BankCardPayment implements IPayment {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Bank card payment";
+    }
 }
 
 class BankCard{
@@ -51,6 +55,12 @@ class BankCard{
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    @Override
+    public String toString() {
+        return "Card number: " + cardNum +
+                "\nExpiry date: " + expiryDate.getMonth() + "/" + expiryDate.getYear();
     }
 }
 

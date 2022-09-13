@@ -26,4 +26,9 @@ public class Reservation {
         return lastDate;
     }
 
+    @Override
+    public String toString() {
+        return customer.getFirstName() + " " + customer.getLastName() +
+                "\nfrom " + firstDate + " to " + lastDate;
+    }
 }

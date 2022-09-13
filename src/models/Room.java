@@ -43,4 +43,14 @@ public class Room {
         }
             System.out.println("Error. Wrong dates.");
     }
+
+    @Override
+    public String toString() {
+        StringBuilder res = new StringBuilder("Number of room: " + number
+                + "\nPrice: " + price + "\n");
+        for (Reservation reservation: reservations){
+            res.append(reservation).append("\n");
+        }
+        return res.toString();
+    }
 }
