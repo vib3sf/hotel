@@ -1,5 +1,9 @@
 import models.*;
 import service.MainService;
-public class Hotel {
 
+import java.util.List;
+
+public class Hotel {
+    private List<Room> rooms;
+    private MainService mainService;
 }
