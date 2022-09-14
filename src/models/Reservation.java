@@ -1,14 +1,13 @@
 package models;
 
 import java.util.Date;
-import java.util.List;
 
 public class Reservation {
     private Customer customer;
     private Date firstDate;
     private Date lastDate;
 
-    Reservation(Customer customer, Date firstDate, Date lastDate){
+    public Reservation(Customer customer, Date firstDate, Date lastDate){
         this.customer = customer;
         this.firstDate = firstDate;
         this.lastDate = lastDate;

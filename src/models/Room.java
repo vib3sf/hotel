@@ -1,6 +1,7 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Room {
@@ -26,31 +27,32 @@ public class Room {
         return number;
     }
 
-    public void addReservation(Reservation reservation) {
-        if (reservation.getFirstDate().before(reservation.getLastDate())) {
-            boolean notReserve = true;
-            for(Reservation res: reservations){
-                if(res.getFirstDate().before(reservation.getLastDate()) ||
-                        res.getLastDate().after(reservation.getFirstDate())) {
-                    notReserve = false;
-                    break;
-                }
-            }
-            if (notReserve) {
-                reservations.add(reservation);
-                return;
+    public boolean isReserve(Date firstDate, Date lastDate) {
+
+        for(Reservation res: reservations){
+            if(res.getFirstDate().before(lastDate) ||
+                    res.getLastDate().after(firstDate)) {
+                return true;
             }
         }
-            System.out.println("Error. Wrong dates.");
+        return false;
+    }
+
+    public void addReservation(Reservation reservation){
+        reservations.add(reservation);
     }
 
     @Override
     public String toString() {
         StringBuilder res = new StringBuilder("Number of room: " + number
-                + "\nPrice: " + price + "\n");
-        for (Reservation reservation: reservations){
-            res.append(reservation).append("\n");
+                + "\nPrice: " + price + "\nReservations:\n");
+        if (!reservations.isEmpty()) {
+            for (Reservation reservation : reservations) {
+                res.append(reservation).append("\n");
+            }
         }
+        else
+            res.append("No reservations.");
         return res.toString();
     }
 }

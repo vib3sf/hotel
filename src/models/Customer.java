@@ -7,11 +7,11 @@ public class Customer {
     private final String lastName;
     private final IPayment payment;
     private double debt;
-    Customer(String firstName, String lastName, IPayment payment, double debt){
+    public Customer(String firstName, String lastName, IPayment payment){
         this.firstName = firstName;
         this.lastName = lastName;
         this.payment = payment;
-        this.debt = debt;
+        debt = 0;
     }
     public String getFirstName() {
         return firstName;
