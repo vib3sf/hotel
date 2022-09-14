@@ -11,7 +11,7 @@ public class BankCard {
         this.cardNum = cardNum;
         this.expiryDate = expiryDate;
         this.cvcCode = cvcCode;
-        this.amount = amount;
+        this.amount = 1000;
     }
 
     public String getCardNum() {

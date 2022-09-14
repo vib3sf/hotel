@@ -5,23 +5,36 @@ import models.payment.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class MainService {
 
-    private final List<Room> rooms;
-
     private static final Scanner scanner = new Scanner(System.in);
 
-    public MainService(List<Room> rooms) {
-        this.rooms = rooms;
+
+    public static void menu() throws ParseException {
+        String line;
+        do{
+            line = scanner.nextLine();
+            if (Objects.equals(line, "1"))
+                findAndReserveRoom();
+            else if (Objects.equals(line, "2"))
+                createAccount();
+            else if (Objects.equals(line, "3"))
+                seeMyReservation();
+        }while(!Objects.equals(line, "exit"));
+    }
+    private static String login(){
+        System.out.println("Enter your login");
+        String login = scanner.nextLine();
+        if (!HotelData.getAccounts().containsKey(login))
+            login = createAccount();
+        return login;
     }
 
+    private static void findAndReserveRoom() throws ParseException {
 
-    private void findAndReserveRoom() throws ParseException {
+        String login = login();
 
         System.out.println("Choose time.\nFrom: ");
         Date firstDate = new SimpleDateFormat("dd/MM").parse(scanner.nextLine());
@@ -30,19 +43,24 @@ public class MainService {
         if (firstDate.after(lastDate))
             findAndReserveRoom();
 
-        for(Room room : rooms){
+
+        for(Room room : HotelData.getRooms()){
             if (!room.isReserve(firstDate, lastDate)) {
                 System.out.println(room + "\nMake a reservation?(y/n) ");
                 if(Objects.equals(scanner.nextLine(), "y")) {
-                    room.addReservation(new Reservation(createACustomer(), firstDate, lastDate));
+                    Reservation reservation = new Reservation(firstDate, lastDate,
+                            room.getPrice() * (lastDate.getDay() - firstDate.getDay()) + 1 );
+                    room.addReservation(reservation);
+                    HotelData.getAccounts().get(login).setReservation(reservation);
                     break;
                 }
             }
         }
-
     }
 
-    private static Customer createACustomer(){
+    private static String createAccount(){
+        System.out.println("Enter your login: ");
+        String login = scanner.nextLine();
         System.out.println("Enter your first name: ");
         String firstName = scanner.nextLine();
         System.out.println("Enter your last name: ");
@@ -64,8 +82,14 @@ public class MainService {
         else if (Objects.equals(strPayment, "cash"))
             payment = new CashPayment();
         else
-            createACustomer();
-        return new Customer(firstName, lastName, payment);
+            createAccount();
+        HotelData.getAccounts().put(login, new Customer(firstName, lastName, payment));
+        return login;
+    }
+
+    private static void seeMyReservation(){
+        String login = login();
+        System.out.println(HotelData.getAccounts().get(login).getReservation());
     }
 
 

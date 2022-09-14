@@ -9,7 +9,7 @@ public class Room {
     private final double price;
     private final int number;
 
-    Room(double price, int number){
+    public Room(int number, double price){
         reservations = new ArrayList<>();
         this.price = price;
         this.number = number;

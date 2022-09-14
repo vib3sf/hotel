@@ -3,18 +3,15 @@ package models;
 import java.util.Date;
 
 public class Reservation {
-    private Customer customer;
     private Date firstDate;
     private Date lastDate;
 
-    public Reservation(Customer customer, Date firstDate, Date lastDate){
-        this.customer = customer;
+    private double debt;
+
+    public Reservation(Date firstDate, Date lastDate, double debt){
         this.firstDate = firstDate;
         this.lastDate = lastDate;
-    }
-
-    public Customer getCustomer() {
-        return customer;
+        this.debt = debt;
     }
 
     public Date getFirstDate() {
@@ -27,7 +24,6 @@ public class Reservation {
 
     @Override
     public String toString() {
-        return customer.getFirstName() + " " + customer.getLastName() +
-                "\nfrom " + firstDate + " to " + lastDate;
+        return "from " + firstDate + " to " + lastDate;
     }
 }
