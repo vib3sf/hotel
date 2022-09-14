@@ -6,13 +6,13 @@ import models.Room;
 import java.util.*;
 
 public class HotelData {
-    private static List<Room> rooms = new ArrayList<>();
+    private static Map<Integer, Room> rooms = new HashMap<>();
     private static Map<String, Customer> accounts = new HashMap<>();
 
-    public static List<Room> getRooms() {
+    public static Map<Integer, Room> getRooms() {
         return rooms;
     }
-    public void setRooms(List<Room> rooms) {
+    public void setRooms(Map<Integer, Room> rooms) {
         HotelData.rooms = rooms;
     }
 

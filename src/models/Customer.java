@@ -2,9 +2,6 @@ package models;
 
 import models.payment.IPayment;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Customer {
     private final String firstName;
     private final String lastName;
