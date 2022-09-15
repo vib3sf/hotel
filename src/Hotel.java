@@ -1,10 +1,10 @@
+import service.HotelData;
 import service.MainService;
 
-import java.text.ParseException;
 
 public class Hotel {
-    public static void main(String[] args) throws ParseException {
-        MainService hotel = new MainService();
-        hotel.menu();
+    public static void main(String[] args) {
+        new HotelData();
+        MainService.menu();
     }
 }

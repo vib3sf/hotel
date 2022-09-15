@@ -6,6 +6,12 @@ import models.Room;
 import java.util.*;
 
 public class HotelData {
+
+    public HotelData(){
+        rooms.put(1, new Room(1, 100));
+        rooms.put(2, new Room(1, 150));
+        rooms.put(3, new Room(1, 400));
+    }
     private static Map<Integer, Room> rooms = new HashMap<>();
     private static Map<String, Account> accounts = new HashMap<>();
 

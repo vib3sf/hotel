@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class AdminService {
 
     private static final Scanner scanner = new Scanner(System.in);
-    private static String password = "1111";
+    private static String adminPassword = "1111";
 
     public static void adminMenu(){
         if (!checkPassword())
@@ -29,7 +29,7 @@ public class AdminService {
             else if (Objects.equals(line, "4"))
                 seeAllRooms();
             else if (Objects.equals(line, "5"))
-                changePassword();
+                changeAdminPassword();
         }while(!Objects.equals(line, "6"));
 
     }
@@ -59,18 +59,18 @@ public class AdminService {
     }
     private static boolean checkPassword(){
         System.out.println("Enter password: ");
-        if (!Objects.equals(scanner.nextLine(), password)){
+        if (!Objects.equals(scanner.nextLine(), adminPassword)){
             System.out.println("Wrong password.");
             return false;
         }
         return true;
     }
 
-    private static void changePassword(){
+    private static void changeAdminPassword(){
         System.out.println("Enter old password: ");
         if (checkPassword()){
             System.out.println("Enter new password: ");
-            password = scanner.nextLine();
+            adminPassword = scanner.nextLine();
             return;
         }
         System.out.println("Wrong password.");

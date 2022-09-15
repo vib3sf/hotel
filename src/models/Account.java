@@ -1,6 +1,5 @@
 package models;
 
-import models.payment.IPayment;
 
 public class Account {
 
@@ -8,15 +7,13 @@ public class Account {
     private String password;
     private final String firstName;
     private final String lastName;
-    private final IPayment payment;
     private double debt;
     private Reservation reservation;
-    public Account(String login, String password, String firstName, String lastName, IPayment payment){
+    public Account(String login, String password, String firstName, String lastName){
         this.login = login;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.payment = payment;
     }
 
     public String getLogin() {
@@ -43,9 +40,6 @@ public class Account {
         return lastName;
     }
 
-    public IPayment getPayment() {
-        return payment;
-    }
     public double getDebt() {
         return debt;
     }
@@ -68,7 +62,6 @@ public class Account {
     @Override
     public String toString() {
         return firstName + " " + lastName +
-                "\nType of payment: " + payment +
                 "\nExpensive: " + debt;
     }
 }
