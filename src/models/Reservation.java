@@ -6,12 +6,9 @@ public class Reservation {
     private Date firstDate;
     private Date lastDate;
 
-    private double debt;
-
-    public Reservation(Date firstDate, Date lastDate, double debt){
+    public Reservation(Date firstDate, Date lastDate){
         this.firstDate = firstDate;
         this.lastDate = lastDate;
-        this.debt = debt;
     }
 
     public Date getFirstDate() {

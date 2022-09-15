@@ -1,11 +1,11 @@
 package models.payment;
 
-import models.Customer;
+import models.Account;
 
 public class CashPayment implements IPayment {
     @Override
-    public void pay(double amount, Customer customer) {
-        customer.setDebt(customer.getDebt() - amount);
+    public void pay(double amount, Account account) {
+        account.setDebt(account.getDebt() - amount);
     }
 
     @Override

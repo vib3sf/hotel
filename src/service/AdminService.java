@@ -1,6 +1,6 @@
 package service;
 
-import models.Customer;
+import models.Account;
 import models.Room;
 
 import java.util.Map;
@@ -47,7 +47,7 @@ public class AdminService {
     }
 
     private static void seeAllAccounts(){
-        for (Map.Entry <String, Customer> acc : HotelData.getAccounts().entrySet()){
+        for (Map.Entry <String, Account> acc : HotelData.getAccounts().entrySet()){
             System.out.println("Email :" + acc.getKey());
             System.out.println(acc.getValue() + "\n");
         }

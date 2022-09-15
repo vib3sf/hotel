@@ -1,8 +1,8 @@
 package models.payment;
 
-import models.Customer;
+import models.Account;
 
 public interface IPayment {
-    void pay(double amount, Customer customer);
+    void pay(double amount, Account account);
 }
 
