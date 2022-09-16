@@ -20,14 +20,16 @@ public class MainService {
                 else if (Objects.equals(choice, "2"))
                     findAndReserveRoom();
                 else if (Objects.equals(choice, "3"))
-                    seeReservation();
+                    seeReservations();
                 else if (Objects.equals(choice, "4"))
-                    payDebt();
+                    removeReservation();
                 else if (Objects.equals(choice, "5"))
-                    changePassword();
+                    payDebt();
                 else if (Objects.equals(choice, "6"))
+                    changePassword();
+                else if (Objects.equals(choice, "7"))
                     AdminService.adminMenu();
-            } while (!Objects.equals(choice, "7"));
+            } while (!Objects.equals(choice, "8"));
         }catch (Exception ex){
             System.out.println("Wrong input.");
             menu();
@@ -78,7 +80,7 @@ public class MainService {
                 if(Objects.equals(scanner.nextLine(), "y")) {
                     Reservation reservation = new Reservation(firstDate, lastDate, room.getNumber());
                     room.addReservation(reservation);
-                    HotelData.getAccounts().get(login).setReservation(reservation);
+                    HotelData.getAccounts().get(login).addReservation(reservation);
                     HotelData.getAccounts().get(login).setDebt(room.getPrice() * (lastDate.getDay() - firstDate.getDay() + 1));
                     return;
                 }
@@ -87,11 +89,18 @@ public class MainService {
         System.out.println("Sorry, not available rooms for this time. Choose other time? ");
     }
 
-    private static void seeReservation(){
+    private static void seeReservations(){
         String login = login();
-        if (login != null)
-            System.out.println(HotelData.getAccounts().get(login).getReservation());
+        int i = 0;
+        for (Reservation reservation : HotelData.getAccounts().get(login).getReservations())
+            System.out.println("Num of reservation: " + ++i + "\n" + reservation);
+    }
 
+    private static void removeReservation(){
+        String login = login();
+        seeReservations();
+        System.out.print("Choose num reservation: ");
+        HotelData.getAccounts().get(login).getReservations().remove(scanner.nextInt() + 1);
     }
 
     private static void changePassword(){
@@ -156,7 +165,7 @@ public class MainService {
         System.out.println("\t Menu Hotel" +
                 "\n1 - create account" +
                 "\n2 - find and reserve room" +
-                "\n3 - see reservation" +
+                "\n3 - see reservations" +
                 "\n4 - pay debt" +
                 "\n5 - change password" +
                 "\n6 - admin menu" +

@@ -1,6 +1,11 @@
 package models;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class Account {
 
     private String login;
@@ -8,7 +13,9 @@ public class Account {
     private final String firstName;
     private final String lastName;
     private double debt;
-    private Reservation reservation;
+
+    private List<Reservation> reservations = new ArrayList<>() {
+    };
     public Account(String login, String password, String firstName, String lastName){
         this.login = login;
         this.password = password;
@@ -51,12 +58,16 @@ public class Account {
             this.debt = debt;
     }
 
-    public Reservation getReservation() {
-        return reservation;
+    public List<Reservation> getReservations() {
+        return reservations;
     }
 
-    public void setReservation(Reservation reservation) {
-        this.reservation = reservation;
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
+    }
+
+    public void addReservation(Reservation reservation){
+        reservations.add(reservation);
     }
 
     @Override
