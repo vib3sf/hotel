@@ -153,7 +153,7 @@ public class MainService {
             if (!HotelData.getAccounts().containsKey(login)) {
                 System.out.println("Login is not found. Try again?");
                 if (Objects.equals(scanner.nextLine(), "y"))
-                    login();
+                    return login();
                 return null;
             }
             while (true) {

@@ -36,6 +36,12 @@ public class AdminService {
     private static void addRoom(){
         System.out.println("Number of room: ");
         int numRoom = scanner.nextInt();
+        if (HotelData.getRooms().containsKey(numRoom)) {
+            System.out.println("Login already exists. Try again?");
+            if (Objects.equals(scanner.nextLine(), "y"))
+                addRoom();
+            return;
+        }
         System.out.println("Price of room: ");
         int price = scanner.nextInt();
         HotelData.getRooms().put(numRoom, new Room(numRoom, price));
