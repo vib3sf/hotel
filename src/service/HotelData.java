@@ -8,9 +8,10 @@ import java.util.*;
 public class HotelData {
 
     public HotelData(){
+        accounts.put("1", new Account("1", "1", "1", "1"));
         rooms.put(1, new Room(1, 100));
-        rooms.put(2, new Room(1, 150));
-        rooms.put(3, new Room(1, 400));
+        rooms.put(2, new Room(2, 150));
+        rooms.put(3, new Room(3, 400));
     }
     private static Map<Integer, Room> rooms = new HashMap<>();
     private static Map<String, Account> accounts = new HashMap<>();

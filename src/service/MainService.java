@@ -70,9 +70,13 @@ public class MainService {
         Date firstDate = new SimpleDateFormat("dd/MM").parse(scanner.nextLine());
         System.out.print("To: ");
         Date lastDate = new SimpleDateFormat("dd/MM").parse(scanner.nextLine());
-        if (firstDate.after(lastDate))
+        if (firstDate.after(lastDate)) {
+            System.out.println("Wrong values. Try again?");
             findAndReserveRoom();
-
+            if (Objects.equals(scanner.nextLine(), "y"))
+                findAndReserveRoom();
+            return;
+        }
 
         for(Room room : HotelData.getRooms().values()){
             if (!room.isReserve(firstDate, lastDate)) {
@@ -92,16 +96,23 @@ public class MainService {
     private static void seeReservations(){
         String login = login();
         int i = 0;
-        for (Reservation reservation : HotelData.getAccounts().get(login).getReservations())
-            System.out.println("Num of reservation: " + ++i + "\n" + reservation);
+        printReservations(login);
     }
 
     private static void removeReservation(){
         String login = login();
-        seeReservations();
+        printReservations(login);
         System.out.print("Choose num reservation: ");
-        HotelData.getAccounts().get(login).getReservations().remove(scanner.nextInt() + 1);
+        HotelData.getAccounts().get(login).getReservations().remove(scanner.nextInt() - 1);
     }
+
+
+    private static void printReservations(String login){
+        int i = 0;
+        for (Reservation reservation : HotelData.getAccounts().get(login).getReservations())
+            System.out.println("Num of reservation: " + ++i + "\n" + reservation);
+    }
+
 
     private static void changePassword(){
         String login = login();
@@ -166,10 +177,11 @@ public class MainService {
                 "\n1 - create account" +
                 "\n2 - find and reserve room" +
                 "\n3 - see reservations" +
-                "\n4 - pay debt" +
-                "\n5 - change password" +
-                "\n6 - admin menu" +
-                "\n7 - exit");
+                "\n4 - remove reservation" +
+                "\n5 - pay debt" +
+                "\n6 - change password" +
+                "\n7 - admin menu" +
+                "\n8 - exit");
     }
 
 }
