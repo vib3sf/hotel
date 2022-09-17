@@ -1,10 +1,13 @@
-import service.HotelData;
-import service.MainService;
+import menu.MainMenu;
+import service.AccountService;
+import service.RoomService;
 
 
 public class Hotel {
+
     public static void main(String[] args) {
-        new HotelData();
-        MainService.menu();
+        new AccountService();
+        new RoomService();
+        MainMenu.menu();
     }
 }

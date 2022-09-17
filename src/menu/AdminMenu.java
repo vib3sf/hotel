@@ -1,13 +1,15 @@
-package service;
+package menu;
 
 import models.Account;
 import models.Room;
+import service.AccountService;
+import service.RoomService;
 
 import java.util.Map;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class AdminService {
+public class AdminMenu {
 
     private static final Scanner scanner = new Scanner(System.in);
     private static String adminPassword = "1111";
@@ -33,33 +35,38 @@ public class AdminService {
         }while(!Objects.equals(line, "6"));
 
     }
-    private static void addRoom(){
+    private static void addRoom() {
         System.out.println("Number of room: ");
         int numRoom = scanner.nextInt();
-        if (HotelData.getRooms().containsKey(numRoom)) {
-            System.out.println("Login already exists. Try again?");
+        if (RoomService.roomIsExist(numRoom)) {
+            System.out.println("Room already exists. Try again?");
             if (Objects.equals(scanner.nextLine(), "y"))
                 addRoom();
             return;
         }
         System.out.println("Price of room: ");
-        int price = scanner.nextInt();
-        HotelData.getRooms().put(numRoom, new Room(numRoom, price));
+        double price;
+        do {
+            price = scanner.nextDouble();
+            if (price < 0)
+                System.out.println("Price cannot be negative. Try again? ");
+        } while (Objects.equals(scanner.nextLine(), "y"));
+        RoomService.addRoom(numRoom, price);
     }
     private static void removeRoom(){
         System.out.println("Number of room: ");
         int numRoom = scanner.nextInt();
-        HotelData.getRooms().remove(numRoom);
+        RoomService.removeRoom(numRoom);
     }
 
     private static void seeAllAccounts(){
-        for (Map.Entry <String, Account> acc : HotelData.getAccounts().entrySet()){
+        for (Map.Entry <String, Account> acc : AccountService.getAllAccounts().entrySet()){
             System.out.println("Email :" + acc.getKey());
             System.out.println(acc.getValue() + "\n");
         }
     }
     private static void seeAllRooms(){
-        for (Map.Entry <Integer, Room> room : HotelData.getRooms().entrySet()){
+        for (Map.Entry <Integer, Room> room : RoomService.getAllRooms().entrySet()){
             System.out.println(room.getValue() + "\n");
         }
     }

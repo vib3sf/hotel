@@ -9,10 +9,13 @@ public class Reservation {
 
     private int numbRoom;
 
-    public Reservation(Date firstDate, Date lastDate, int numbRoom){
+    private double cost;
+
+    public Reservation(Date firstDate, Date lastDate, int numbRoom, double cost){
         this.firstDate = firstDate;
         this.lastDate = lastDate;
         this.numbRoom = numbRoom;
+        this.cost = cost;
     }
 
     public Date getFirstDate() {
@@ -37,6 +40,14 @@ public class Reservation {
 
     public void setNumbRoom(int numbRoom) {
         this.numbRoom = numbRoom;
+    }
+
+    public double getCost() {
+        return cost;
+    }
+
+    public void addCost(double cost){
+        this.cost += cost;
     }
 
     @Override

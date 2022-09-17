@@ -1,13 +1,17 @@
-package service;
+package menu;
 
 import models.*;
+import service.AccountService;
+import service.RoomService;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class MainService {
+public class MainMenu {
 
     private static final Scanner scanner = new Scanner(System.in);
+
 
     public static void menu() {
         String choice;
@@ -28,7 +32,7 @@ public class MainService {
                 else if (Objects.equals(choice, "6"))
                     changePassword();
                 else if (Objects.equals(choice, "7"))
-                    AdminService.adminMenu();
+                    AdminMenu.adminMenu();
             } while (!Objects.equals(choice, "8"));
         }catch (Exception ex){
             System.out.println("Wrong input.");
@@ -40,7 +44,7 @@ public class MainService {
         try {
             System.out.print("Enter your login: ");
             String login = scanner.nextLine();
-            if (HotelData.getAccounts().containsKey(login)){
+            if (AccountService.accountIsExist(login)){
                 System.out.println("Login already exists. Try again?");
                 if (Objects.equals(scanner.nextLine(), "y"))
                     createAccount();
@@ -52,7 +56,7 @@ public class MainService {
             String firstName = scanner.nextLine();
             System.out.print("Enter your last name: ");
             String lastName = scanner.nextLine();
-            HotelData.getAccounts().put(login, new Account(login, password, firstName, lastName));
+            AccountService.addAccount(login, password, firstName, lastName);
             System.out.println("Account created successfully!");
 
         } catch (Exception ex) {
@@ -78,24 +82,24 @@ public class MainService {
             return;
         }
 
-        for(Room room : HotelData.getRooms().values()){
+        for(Room room : RoomService.getAllRooms().values()){
             if (!room.isReserve(firstDate, lastDate)) {
                 System.out.println(room + "\nMake a reservation?(y/n) ");
                 if(Objects.equals(scanner.nextLine(), "y")) {
-                    Reservation reservation = new Reservation(firstDate, lastDate, room.getNumber());
+                    Reservation reservation = new Reservation(firstDate, lastDate, room.getNumber(),
+                            room.getPrice() * (lastDate.getDay() - firstDate.getDay() + 1));
                     room.addReservation(reservation);
-                    HotelData.getAccounts().get(login).addReservation(reservation);
-                    HotelData.getAccounts().get(login).setDebt(room.getPrice() * (lastDate.getDay() - firstDate.getDay() + 1));
+                    AccountService.getAccount(login).addReservation(reservation);
+                    AccountService.getAccount(login).addDebt(reservation.getCost());
                     return;
                 }
             }
         }
-        System.out.println("Sorry, not available rooms for this time. Choose other time? ");
+        System.out.println("Sorry, not available rooms for this time.");
     }
 
     private static void seeReservations(){
         String login = login();
-        int i = 0;
         printReservations(login);
     }
 
@@ -103,13 +107,13 @@ public class MainService {
         String login = login();
         printReservations(login);
         System.out.print("Choose num reservation: ");
-        HotelData.getAccounts().get(login).getReservations().remove(scanner.nextInt() - 1);
+        AccountService.getAccount(login).getReservations().remove(scanner.nextInt() - 1);
     }
 
 
     private static void printReservations(String login){
         int i = 0;
-        for (Reservation reservation : HotelData.getAccounts().get(login).getReservations())
+        for (Reservation reservation : AccountService.getAccount(login).getReservations())
             System.out.println("Num of reservation: " + ++i + "\n" + reservation);
     }
 
@@ -117,7 +121,7 @@ public class MainService {
     private static void changePassword(){
         String login = login();
         System.out.print("Enter new password: ");
-        HotelData.getAccounts().get(login).setPassword(scanner.nextLine());
+        AccountService.getAccount(login).setPassword(scanner.nextLine());
     }
 
     private static void payDebt(){
@@ -135,9 +139,9 @@ public class MainService {
                 System.out.print("Enter your cvc code: ");
                 int cvc = scanner.nextInt();
             }
-            System.out.print("Your debt: " + HotelData.getAccounts().get(login).getDebt() +
+            System.out.print("Your debt: " + AccountService.getAccount(login).getDebt() +
                     "\nEnter the amount to be paid: ");
-            HotelData.getAccounts().get(login).setDebt(HotelData.getAccounts().get(login).getDebt() - scanner.nextDouble());
+            AccountService.getAccount(login).subDebt(scanner.nextDouble());
         }catch (Exception ex){
             System.out.println("Wrong input.");
         }
@@ -150,7 +154,7 @@ public class MainService {
             System.out.print("Enter your login: ");
             login = scanner.nextLine();
 
-            if (!HotelData.getAccounts().containsKey(login)) {
+            if (!AccountService.accountIsExist(login)) {
                 System.out.println("Login is not found. Try again?");
                 if (Objects.equals(scanner.nextLine(), "y"))
                     return login();
@@ -159,7 +163,7 @@ public class MainService {
             while (true) {
                 System.out.print("Enter your password: ");
                 password = scanner.nextLine();
-                if (!Objects.equals(HotelData.getAccounts().get(login).getPassword(), password)) {
+                if (!Objects.equals(AccountService.getAccount(login).getPassword(), password)) {
                     System.out.print("Wrong password. Try again? ");
                     if (!Objects.equals(scanner.nextLine(), "y"))
                         return null;

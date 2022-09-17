@@ -30,9 +30,7 @@ public class Room {
     public boolean isReserve(Date firstDate, Date lastDate) {
 
         for(Reservation res: reservations){
-            if((res.getFirstDate().before(firstDate) && res.getLastDate().after(firstDate)) ||
-                    (res.getFirstDate().before(lastDate) && res.getLastDate().after(lastDate)) ||
-                    (res.getFirstDate().after(firstDate) && res.getLastDate().before(firstDate))){
+            if(!((lastDate.before(res.getFirstDate())) || firstDate.after(res.getLastDate()))){
                 return true;
             }
         }

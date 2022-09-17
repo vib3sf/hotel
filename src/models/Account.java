@@ -2,9 +2,7 @@ package models;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Account {
 
@@ -51,11 +49,13 @@ public class Account {
         return debt;
     }
 
-    public void setDebt(double debt) {
-        if (debt < 0)
+    public void addDebt(double debt) {
+        this.debt += debt;
+    }
+    public void subDebt(double debt){
+        this.debt -= debt;
+        if (this.debt < 0)
             this.debt = 0;
-        else
-            this.debt = debt;
     }
 
     public List<Reservation> getReservations() {
