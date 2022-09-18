@@ -1,9 +1,9 @@
 package service;
 
+import models.Reservation;
 import models.Room;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class RoomService {
     private static Map<Integer, Room> rooms = new HashMap<>();
@@ -18,6 +18,15 @@ public class RoomService {
         return rooms;
     }
 
+    public static List<Room> getFreeRooms(Date firstDate, Date lastDate) {
+        List<Room> freeRooms = new ArrayList<>();
+        for (Room room : rooms.values()) {
+            if (!room.isReserve(firstDate, lastDate)) {
+                freeRooms.add(room);
+            }
+        }
+        return freeRooms;
+    }
     public static boolean roomIsExist(int numRoom){
         return rooms.containsKey(numRoom);
     }

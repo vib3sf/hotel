@@ -82,17 +82,15 @@ public class MainMenu {
             return;
         }
 
-        for(Room room : RoomService.getAllRooms().values()){
-            if (!room.isReserve(firstDate, lastDate)) {
-                System.out.println(room + "\nMake a reservation?(y/n) ");
-                if(Objects.equals(scanner.nextLine(), "y")) {
-                    Reservation reservation = new Reservation(firstDate, lastDate, room.getNumber(),
-                            room.getPrice() * (lastDate.getDay() - firstDate.getDay() + 1));
-                    room.addReservation(reservation);
-                    AccountService.getAccount(login).addReservation(reservation);
-                    AccountService.getAccount(login).addDebt(reservation.getCost());
-                    return;
-                }
+        for(Room room : Objects.requireNonNull(RoomService.getFreeRooms(firstDate, lastDate))){
+            System.out.println(room + "\nMake a reservation?(y/n) ");
+            if(Objects.equals(scanner.nextLine(), "y")) {
+                Reservation reservation = new Reservation(firstDate, lastDate, room.getNumber(),
+                        room.getPrice() * (lastDate.getDay() - firstDate.getDay() + 1));
+                room.addReservation(reservation);
+                AccountService.getAccount(login).addReservation(reservation);
+                AccountService.getAccount(login).addDebt(reservation.getCost());
+                return;
             }
         }
         System.out.println("Sorry, not available rooms for this time.");
@@ -107,7 +105,7 @@ public class MainMenu {
         String login = login();
         printReservations(login);
         System.out.print("Choose num reservation: ");
-        AccountService.getAccount(login).getReservations().remove(scanner.nextInt() - 1);
+        AccountService.getAccount(login).removeReservation(scanner.nextInt() - 1);
     }
 
 

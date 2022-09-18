@@ -70,6 +70,10 @@ public class Account {
         reservations.add(reservation);
     }
 
+    public void removeReservation(int numReserve){
+        reservations.remove(numReserve);
+    }
+
     @Override
     public String toString() {
         return firstName + " " + lastName +
