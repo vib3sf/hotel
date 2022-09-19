@@ -5,12 +5,11 @@ import java.util.Date;
 import java.util.List;
 
 public class Room {
-    private final List<Reservation> reservations;
+    private final List<Reservation> reservations = new ArrayList<>();
     private final double price;
     private final int number;
 
     public Room(int number, double price){
-        reservations = new ArrayList<>();
         this.price = price;
         this.number = number;
     }

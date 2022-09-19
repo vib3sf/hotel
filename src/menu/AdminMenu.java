@@ -60,9 +60,8 @@ public class AdminMenu {
     }
 
     private static void seeAllAccounts(){
-        for (Map.Entry <String, Account> acc : AccountService.getAllAccounts().entrySet()){
-            System.out.println("Email :" + acc.getKey());
-            System.out.println(acc.getValue() + "\n");
+        for (Account acc : AccountService.getAllAccounts()){
+            System.out.println(acc);
         }
     }
     private static void seeAllRooms(){

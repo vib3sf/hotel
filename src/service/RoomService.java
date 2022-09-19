@@ -1,18 +1,11 @@
 package service;
 
-import models.Reservation;
 import models.Room;
 
 import java.util.*;
 
 public class RoomService {
-    private static Map<Integer, Room> rooms = new HashMap<>();
-
-    public RoomService(){
-        rooms.put(1, new Room(1, 100));
-        rooms.put(2, new Room(2, 150));
-        rooms.put(3, new Room(3, 400));
-    }
+    private static final Map<Integer, Room> rooms = new HashMap<>();
 
     public static Map<Integer, Room> getAllRooms() {
         return rooms;

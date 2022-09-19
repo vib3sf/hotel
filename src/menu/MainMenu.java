@@ -1,8 +1,7 @@
 package menu;
 
 import models.*;
-import service.AccountService;
-import service.RoomService;
+import service.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,6 +13,7 @@ public class MainMenu {
 
 
     public static void menu() {
+        new AccountService();
         String choice;
         try {
             do {
@@ -85,11 +85,10 @@ public class MainMenu {
         for(Room room : Objects.requireNonNull(RoomService.getFreeRooms(firstDate, lastDate))){
             System.out.println(room + "\nMake a reservation?(y/n) ");
             if(Objects.equals(scanner.nextLine(), "y")) {
-                Reservation reservation = new Reservation(firstDate, lastDate, room.getNumber(),
-                        room.getPrice() * (lastDate.getDay() - firstDate.getDay() + 1));
+                Reservation reservation = new Reservation(firstDate, lastDate, room.getNumber());
                 room.addReservation(reservation);
                 AccountService.getAccount(login).addReservation(reservation);
-                AccountService.getAccount(login).addDebt(reservation.getCost());
+                AccountService.getAccount(login).addDebt(room.getPrice() * (lastDate.getDay() - firstDate.getDay() + 1));
                 return;
             }
         }
